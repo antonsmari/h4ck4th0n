@@ -1,0 +1,23 @@
+define command {
+	command_name    notify-gqasb
+	command_line    /root/pyapi/nagios.py /root/pyapi/config/config.yaml $SERVICESTATE$ $SERVICESTATETYPE$ $SERVICEATTEMPT$
+}
+
+{{#instances}}
+
+define host {
+	use         generic-host
+	host_name   {{value}}
+	alias       {{public_ip}}
+	address     {{private_ip}}
+}
+
+define service {
+	use                    generic-service
+	host_name              {{value}}
+	service_description    Current Load
+	check_command          ssh_load!5.0!4.0!3.0!10.0!6.0!4.0
+	event_handler          notify-gqasb
+}
+
+{{/instances}}

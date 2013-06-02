@@ -1,0 +1,10 @@
+templates:
+    -
+        template: /root/pyapi/config/templates/nagios.mustache
+        location: /etc/nagios3/conf.d/sigsegv.cfg
+
+commands:
+    - /etc/init.d/nagios3 reload
+
+ignore-instances:
+    - i-63b3af95
